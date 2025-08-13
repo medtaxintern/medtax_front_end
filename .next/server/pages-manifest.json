@@ -1,0 +1,8 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/form2307": "pages/form2307.js",
+  "/api/check_result": "pages/api/check_result.js",
+  "/api/webhook": "pages/api/webhook.js"
+}
