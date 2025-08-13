@@ -5,7 +5,9 @@ const storage = new Storage({
 
     // This is only relevant for running the web app locally which needs key
     // for authentication in making connections with GCP 
-
+    // Download the key from the IAM service account and select the nextjs agent account
+    // Go to manage keys > create keys then change the filepath below the path 
+    // of the downloaded json file
     // This is the path to my key
     keyFilename: '../nextjs_agent_key.json',
 });
