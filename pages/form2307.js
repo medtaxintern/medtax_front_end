@@ -1,52 +1,102 @@
 import { useState, useEffect } from 'react';
+import { initializeApp }  from "firebase/app";
+import { getFirestore, doc, onSnapshot } from "firebase/firestore";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCTm9yorkIuYGZ3c2BEKmyDtSPSH9hIh9c",
+  authDomain: "medtax-ocr-prototype.firebaseapp.com",
+  projectId: "medtax-ocr-prototype",
+  storageBucket: "medtax-ocr-prototype.firebasestorage.app",
+  messagingSenderId: "1086778133977",
+  appId: "1:1086778133977:web:51dc0e6f11107978121dc8",
+  measurementId: "G-JZD4WFKMWR"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+signInAnonymously(auth).then(() => {
+  console.log("signed in Anonymously");
+}).catch ((error) => {
+  console.error("Anonymous sign-in Failed: ", error)
+});
+
+let userId = null;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User is signed in: ", user.uid);
+    userId = user.uid;
+  } else {
+    console.log("No user is signed in.");
+  }
+});
+
+const db = getFirestore(app, "extracted-data-db");
 
 export default function Form2307() {
   const [preview, setPreview] = useState(null);
   const [fileType, setFileType] = useState(null);
+  const [filename, setFilename] = useState(null);
   const [result, setResult] = useState(null);
-  const [status, setStatus] = useState("processing"); // For polling, unused for now
   const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState(null);
-
   const [inputValue, setInputValue] = useState("");
   const [tableValue, setTableValue] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const eventSource = new EventSource("/api/check_result");
-    console.log("ANYTHING HAPPENING?");
-
-    eventSource.onmessage = (event) => {
-      console.log("Front-end received data");
-      const data = JSON.parse(event.data);
-      console.log(data);
-      setResult(data);
-    };
+    // Firestore method, stores the extracted data to 
+    // Firestore database, and collects it
     
-    eventSource.onerror = (err) => {
-      console.log("AM I IN ERROR");
-      console.error("SSE Error: ", err);
-      eventSource.close();
-    };
-  
-    return () => {
-      console.log("Why am i here");
-      eventSource.close();
-    };
-
-  }, []);
+      console.log("The user id is: ", userId);
+     try{
+       const unsub = onSnapshot(doc(db, userId, filename), (docSnap) => {
+        console.log("Inside snapshot: The user ID is: ", userId);
+        console.log("And the filename: ", filename);
+          if (docSnap.exists()) {
+            console.log("Updated: ", docSnap.data());
+            setResult(docSnap.data());
+            if(result){
+              console.log("unsubbing...");
+              unsub();
+            }
+          } else {
+            console.log("No Data!");
+          }
+          }, (error) => {
+            console.error("Error fetching data: ", error);
+          });
+    } catch (error) {
+      console.log("Collection/Document doesnt exist yet.");
+     }
+  }, [userId, filename])
+    
 
   // STORE THE VALUES 
   useEffect(() => {
-    if(result) {
-      setInputValue(result.payload);
-      setTableValue(result.payload.table_rows);
+    if (result) {
+      try {
+      console.log(result)
+      setInputValue(result);
+      setTableValue(result.table_rows);
+
+      }catch (error) {
+        console.log(error.message);
+      }
     };
 
   }, [result]);
 
   const handleFileChange = async (e) => {
+    
     const file = e.target.files[0];
     if (file) {
       setFileType(file.type);
+      let pre_file = file.name;
+
+      setFilename(pre_file.replace(/\.[^/.]+$/, ""));
+      console.log(userId);
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
@@ -63,11 +113,12 @@ export default function Form2307() {
           body: JSON.stringify({
             fileName: file.name,
             contentType: file.type,
+            userId: userId,
           }),
         });
 
         if(!signedURL.ok) throw new Error("Failed to fetch signedURL");
-        console.log("signedURL", signedURL);
+
         const { url } = await signedURL.json();
 
         if (!url) throw new Error("Failed to get upload URL");
@@ -76,16 +127,19 @@ export default function Form2307() {
           method: "PUT",
           headers: {
             "Content-Type": file.type,
+            "x-goog-meta-userId" : userId,
           },
           body : file,
         });
 
         if(!upload.ok) throw new Error("Failed to upload");
+        if(upload.ok) console.log("File Uploaded");
       }catch (error) {
         setError(error.message);
       } finally {
         setIsUploading(false);
       }
+
     }
   };
 
