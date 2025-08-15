@@ -7,9 +7,12 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^7.16.0",
+    "firebase": "^12.1.0",
     "list": "^2.0.19",
     "next": "^15.4.5",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "redis": "^5.8.1",
+    "redis-server": "^1.2.2"
   }
 }
