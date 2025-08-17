@@ -76,7 +76,7 @@ export default function Form2307() {
   useEffect(() => {
     if (result) {
       try {
-      console.log(result)
+      
       setInputValue(result);
       setTableValue(result.table_rows);
 
