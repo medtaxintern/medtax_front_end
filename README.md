@@ -1,5 +1,8 @@
 # HOW TO RUN
-  Run this command: 
+  ## Install DEPENDENCIES
+  `npm install`
+  
+  then 
 
   `npm run dev`
 
