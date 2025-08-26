@@ -1,0 +1,43 @@
+
+/* RIGHT COLUMN */
+
+.field-label{
+    @apply text-[10.5px] text-[#222] font-bold mb-2 mt-2 ml-2
+}
+
+.field-input{
+    @apply block mb-[6px] py-1 px-1.5 w-full rounded-[3px] border border-[#bbb] text-[12px] bg-[#fafafa] text-[#222] 
+} 
+
+.optional-style{
+  @apply text-[#aaa] text-[9] font-bold ml-2
+}
+
+.field-input-half{
+   @apply block py-1 px-1 w-full rounded-[3px] border border-[#bbb] text-[12px] bg-[#fafafa] text-[#222] 
+    mb-0
+}   
+
+.two-field-input{
+  @apply flex gap-1.5 mb-2
+}
+
+.field-textarea{
+    @apply block mb-2.5 py-1.5 px-2 w-full rounded-[3px] border border-[#bbb] text-[11px] bg-[#fafafa] text-[#222] h-[5%] resize-none
+}
+
+.section-title{
+    @apply mt-1.5 mb-2 text-[13px] font-bold text-[#444] border-t-2
+}
+
+.field-checkbox{
+    @apply flex gap-6 mb-2 mt-[-1px] 
+}
+
+.field-checkbox-label{
+    @apply flex text-[12px] text-[#222] font-bold items-center gap-1.5
+}
+
+.field-checkbox-input{
+    @apply mr-0.5 accent-[#222]
+}

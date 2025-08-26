@@ -20,10 +20,10 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/form2307": [
+    "/form2307-page": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/form2307.js"
+      "static/chunks/pages/form2307-page.js"
     ]
   },
   "ampFirstPages": []

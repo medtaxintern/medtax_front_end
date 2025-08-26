@@ -2,5 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/form2307": "pages/form2307.js"
+  "/form2307-page": "pages/form2307-page.js",
+  "/expense-receipt": "pages/expense-receipt.js"
 }

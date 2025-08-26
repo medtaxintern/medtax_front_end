@@ -1,0 +1,23 @@
+.container{
+    @apply w-full flex  h-full
+}
+
+.table-style{
+    @apply w-full
+}
+
+.tbody-style{
+    
+}
+
+.tr-style{ 
+    @apply border-b-2 p-1 border-zinc-600 border-opacity-35 mb-3
+}
+
+.td-style{
+    @apply flex flex-row w-full pt-3 pb-1
+}
+
+.doc-name{
+    @apply font-semibold flex gap-1 cursor-pointer
+}

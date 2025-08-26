@@ -21,9 +21,9 @@ export default async function handler(req, res) {
         return res.status(400).json({ message: "Only POST method is allowed" });
     }
     
-    const { userId, fileName, contentType } = req.body;
+    const { docType, fileName, contentType } = req.body;
     
-    if (!fileName || !contentType || !userId) {
+    if (!fileName || !contentType || !docType) {
         return res.status(400).json({ message: 'Missing fileName or contentType' });
     }
 
@@ -33,18 +33,19 @@ export default async function handler(req, res) {
     expires: Date.now() + 15 * 60 * 1000, // 15 minutes
     contentType,
     extensionHeaders: {
-        "x-goog-meta-userId": userId 
+        "x-goog-meta-docType": docType
     }
   };
 
     const [url] = await storage
         .bucket(bucketName)
-        .file(fileName)
+        .file(`${docType}/${fileName}`)
         .getSignedUrl(options);
 
     if (!url) {
         return res.status(500).json({ message: 'Failed to generate upload URL' });
     }
+    console.log("URL SENT")
     return res.status(200).json({ url });
 
 }
