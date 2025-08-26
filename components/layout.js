@@ -9,7 +9,7 @@ export default function Layout({ children }){
             
             <nav className="mb-5">
                 <div className=" flex flex-col sm:flex-row sm:space-x-4">
-                    <Link href="/form2307-page" className={`nav-link ${ router.pathname === "/tempForm2307"? "nav-link-active": ""}`}>Form 2307</Link>
+                    <Link href="/form2307-page" className={`nav-link ${ router.pathname === "/form2307-page"? "nav-link-active": ""}`}>Form 2307</Link>
 
                     <Link href="/service-invoice" className={`nav-link ${ router.pathname === "/service-invoice"? "nav-link-active": ""}`}>Service Invoice</Link>
 
