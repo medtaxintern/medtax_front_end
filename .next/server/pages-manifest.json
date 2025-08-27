@@ -3,5 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/form2307-page": "pages/form2307-page.js",
+  "/service-invoice": "pages/service-invoice.js",
   "/expense-receipt": "pages/expense-receipt.js"
 }

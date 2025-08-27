@@ -61,7 +61,7 @@ export default function UploadModal({ isOpen, onClose, docType, }){
         if(!upload.ok) throw new Error("Failed to upload");
         if(upload.ok) {
           console.log("File Uploaded");
-          alert("The file is uploaded!");
+          alert(`A ${docType} file has been uploaded!`);
           onClose()
         }
 
