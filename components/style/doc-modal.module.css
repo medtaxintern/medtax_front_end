@@ -43,5 +43,5 @@
 
 /* RIGHT COLUMN CONTAINER */
 .right-column{
-    @apply flex flex-col min-w-[50%] p-3  font-mono text-[14px]
+    @apply flex flex-col min-w-[50%] p-3  font-mono text-[17px]
 }

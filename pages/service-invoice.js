@@ -10,7 +10,7 @@ import { getUserDocuments, getDocumentData, getDocumentPreview, updateDocument }
 
 import { useState, useEffect } from "react";
 
-export default function form2307() {
+export default function service_invoice() {
     const collection = "service_invoice"
 
     const [isOpenUpload, setOpenUpload] = useState(false);
