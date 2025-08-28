@@ -2,15 +2,19 @@
 /* RIGHT COLUMN */
 
 .field-label{
-    @apply text-[11.5px] text-[#222] font-bold mb-2 mt-2 ml-2
+    @apply flex-col text-base text-[#222] font-semibold mb-2 mt-2 ml-2
 }
 
 .field-input{
     @apply block mb-[6px] py-1 px-1.5 w-full rounded-[3px] border border-[#bbb] text-[12px] bg-[#fafafa] text-[#222] 
-} 
+}
+
+.select-input{
+    @apply w-full rounded-md bg-white border border-neutral-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500
+}
 
 .optional-style{
-  @apply text-[#aaa] text-[9] font-bold ml-2
+  @apply text-[#6a6a6a] text-sm font-bold ml-2
 }
 
 .field-input-half{
@@ -40,4 +44,24 @@
 
 .field-checkbox-input{
     @apply mr-0.5 accent-[#222]
+}
+
+.currency-field{
+    @apply text-lg w-full max-w-full p-3 pr-0 space-y-2
+}
+
+.section{
+    @apply flex items-center justify-between
+}
+
+.section .field-label{
+    @apply ml-0
+}
+
+.section .field-input{
+    @apply w-40 text-right disabled:text-[#464646] disabled:bg-[#f0f0f0] disabled:font-bold
+} 
+
+.info-style{
+  @apply block text-[#6a6a6a] text-xs font-bold ml-2
 }

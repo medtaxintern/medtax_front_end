@@ -27,8 +27,8 @@ export default function form2307() {
     const openDoc = async (e) => {
         console.log(e.target.id)
         const id = e.target.id;
-        const path = `${collection}/${e.target.id}.pdf`; //local path
         const data = await getDocumentData(collection, id);
+        const path = `${collection}/${data.pdf_name}`; 
         const url = await getDocumentPreview(path);
         console.log("The path is: ", url);
         setData(data);

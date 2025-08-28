@@ -20,10 +20,10 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/expense-receipt": [
+    "/form2307-page": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/expense-receipt.js"
+      "static/chunks/pages/form2307-page.js"
     ],
     "/service-invoice": [
       "static/chunks/webpack.js",

@@ -3,6 +3,8 @@ import {useState, useEffect} from "react";
 export default function UploadModal({ isOpen, onClose, docType, }){
   const [fileType, setFileType] = useState(null);
   const [filename, setFilename] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+
      useEffect(() => {
       const handleKeyDown = (event) => {
         if (event.key === "Escape") {
@@ -66,8 +68,11 @@ export default function UploadModal({ isOpen, onClose, docType, }){
         }
 
       }catch (error) {
-        setError(error.message);
-      } 
+        alert(`${error.message} \n You might be uploading a file with a filename that already exists in the bucket`);
+        onClose()
+      } finally {
+        setIsUploading(false);
+      }
     }
   }
 
@@ -84,7 +89,7 @@ export default function UploadModal({ isOpen, onClose, docType, }){
         
          <input className="hidden" type="file" accept="application/pdf, image/*" onChange={handle_upload}id="file-upload"/>
           <div className="w-full flex justify-center mt-0">
-             <label className="bg-[#181818] text-white text-[18px] font-normal border-0 rounded-md text-center cursor-pointer mt-0 p-2 " htmlFor="file-upload">Upload Document/Picture</label>
+             <label className="bg-[#181818] text-white text-[18px] font-normal border-0 rounded-md text-center cursor-pointer mt-0 p-2 " disabled={isUploading || false} htmlFor="file-upload">Upload Document/Picture</label>
           </div>
 
       </div>

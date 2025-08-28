@@ -27,8 +27,8 @@ export default function service_invoice() {
     const openDoc = async (e) => {
         console.log(e.target.id)
         const id = e.target.id;
-        const path = `${collection}/${e.target.id}.pdf`; //local path
         const data = await getDocumentData(collection, id);
+        const path = `${collection}/${data.pdf_name}`; //local path
         const url = await getDocumentPreview(path);
         console.log("The path is: ", url);
         setData(data);
@@ -121,30 +121,32 @@ export default function service_invoice() {
             url={path}
         >
             {/* RIGHT COLUMN */}
-            <label className={styles["field-label"]} > Client Name </label>
-            <input className={styles["field-input"]} type="text" value={formData?.payor_name || ""} onChange={e => handleChange("payor_name", e.target.value)} placeholder=""/>
-            
-            <label className={styles["field-label"]}> Branch <span className={styles["optional-style"]} >(Optional)</span></label>
-            <input className={styles["field-input"]} type="text" value={formData?.branch || ""} onChange={e => handleChange("branch", e.target.value)}placeholder=""/>
-            
+                
             <div className={styles["two-field-input"]}>
 
                 <div className="w-full">
-                    <label className={styles["field-label"]}>TIN</label>
-                    <input className={styles["field-input-half"]} type="text" value={formData?.payor_tin_no || ""} onChange={e => handleChange("payor_tin_no", e.target.value)} placeholder=""/>
+                    <label className={styles["field-label"]}>OR No.</label>
+                    <input className={styles["field-input-half"]} type="text" value={formData?.Invoice_No || ""} onChange={e => handleChange("invoice_no",e.target.value)} placeholder="" />
                 </div>
 
                 <div className="w-full">
-                    <label className={styles["field-label"]}>ATC</label>
-                    <input className={styles["field-input-half"]} type="text" value={formData?.table_rows?.[0]?.atc || ""} onChange={e => handleTableChange(0, "atc", e.target.value)} placeholder="" />
+                    <label className={styles["field-label"]}>Client Type</label>
+                    <input className={styles["field-input-half"]} type="dropdown" value={formData?.client_type || ""} onChange={e => handleChange("client_type", e.target.value)} placeholder="" />
                 </div>
             </div>
 
+            <label className={styles["field-label"]} > Client Name </label>
+            <input className={styles["field-input"]} type="text" value={formData?.Registered_Name || ""} onChange={e => handleChange("registered_name", e.target.value)} placeholder=""/>
+            
+            <label className={styles["field-label"]}> Branch <span className={styles["optional-style"]} >(Optional)</span></label>
+            <input className={styles["field-input"]} type="text" value={formData?.branch || ""} onChange={e => handleChange("branch", e.target.value)}placeholder=""/>
+
+
             <div className={styles["two-field-input"]}>
 
                 <div className="w-full">
-                    <label className={styles["field-label"]}>Applicable Period</label>
-                    <input className={styles["field-input-half"]} type="text" value={formData?.to_date || ""} onChange={e => handleChange("to_date", e.target.value)} placeholder="" />
+                    <label className={styles["field-label"]}>Date Issued</label>
+                    <input className={styles["field-input-half"]} type="text" value={formData?.Date || ""} onChange={e => handleChange("date_issued", e.target.value)} placeholder="" />
                 </div>
 
                 <div className="w-full">
@@ -152,12 +154,10 @@ export default function service_invoice() {
                     <input className={styles["field-input-half"]} type="text" value={formData?.quarter || ""} onChange={e => handleChange("quarter", e.target.value)} placeholder="" />
                 </div>
             </div>
-            
-            <label className={styles["field-label"]}>Address</label>
-            <textarea className={styles["field-textarea" ]}placeholder="" value={formData?.payor_registered_address || ""} onChange={e => handleChange("payor_registered_address", e.target.value)} ></textarea>
 
             <div className={styles["section-title"]}>
                 For Tax Calculations
+                <p className={styles["optional-style"]}>The fields below will serve as an indicator for tax calculations</p>
             </div>
 
             <div className={styles["two-field-input"]}>
@@ -181,28 +181,50 @@ export default function service_invoice() {
                 </label>
 
                 <label className={styles["field-checkbox-label"]}>
-                    <input className={styles["field-checkbox-input"]} type="checkbox"  /> Without SIP?
+                    <input className={styles["field-checkbox-input"]} type="checkbox"  /> Without 2307?
                 </label>
             
             </div>
 
-            <label className={styles["field-label"]}>Gross Amount</label>
-            <input className={styles["field-input"]} type="text" value={formData?.gross_amount || ""} onChange={e => handleChange("gross_amount", e.target.value)} placeholder="" />
+            <div className={styles["currency-field"]}>
 
-            <label className={styles["field-label"]}>Tax Rate</label>
-            <input className={styles["field-input"]} type="text" value={formData?.tax_rate || ""} onChange={e => handleChange("tax_rate", e.target.value)} placeholder="" />
+                <div className={styles["section"]}>
+                    <label className={styles["field-label"]}>Gross Amount</label>
+                    <input className={styles["field-input"]} type="text" value={formData?.gross_amount || "0"} onChange={e => handleChange("gross_amount", e.target.value)} placeholder="" />
+                </div>
 
-            <label className={styles["field-label"]}>PT Rate</label>
-            <input className={styles["field-input"]} type="text" value={formData?.pt_rate || ""} onChange={e => handleChange("pt_rate", e.target.value)} placeholder=""  />
+                <div className={styles["section"]}> 
+                    <label className={styles["field-label"]}>Discount</label>
+                    <input className={styles["field-input"]} type="text" value={formData?.discount || "0"} onChange={e => handleChange("discount", e.target.value)} placeholder=""  />
+                </div>
 
-            <label className={styles["field-label"]}>Creditable PT</label>
-            <input className={styles["field-input"]} type="text" value={formData?.creditable_pt || ""} onChange={e => handleChange("creditable_pt", e.target.value)} placeholder=""/>
+                <div className={styles["section"]}>
+                    <label className={styles["field-label"]}>Withheld Amount</label>
+                    <input className={styles["field-input"]} type="text" value={formData?.withheld_amount || "0"} onChange={e => handleChange("withheld_amount", e.target.value)} placeholder="" />
+                </div>
 
-            <label className={styles["field-label"]}>Withheld Amount</label>
-            <input className={styles["field-input"]} type="text" value={formData?.withheld_amount || ""} onChange={e => handleChange("withheld_amount", e.target.value)} placeholder="" />
+                <div className={styles["section"]}>
+                    <label className={styles["field-label"]}>Tax Rate
+                        <span className={styles["info-style"]} >(Withheld Amount / Net Receipt) x 100</span>
+                    </label>
+                    <input className={styles["field-input"]} type="text" value={formData?.tax_rate || "0"} onChange={e => handleChange("tax_rate", e.target.value)} placeholder="" />
+                </div>
 
-            <label className={styles["field-label"]}>Net Amount</label>
-            <input className={styles["field-input"]} type="text" value={formData?.net_amount || ""} onChange={e => handleChange("net_amount", e.target.value)} placeholder="" />
+                <div className={styles["section"]}>
+                    <label className={styles["field-label"]}>Net Receipt
+                         <span className={styles["info-style"]} >Gross Amount - Discount</span>
+                    </label>
+                    <input className={styles["field-input"]} type="text" value={formData?.net_receipt || "0"} onChange={e => handleChange("net_receipt", e.target.value)} placeholder=""/>
+                </div>
+
+                <div className={styles["section"]}>
+                    <label className={styles["field-label"]}>Net Amount
+                        <span className={styles["info-style"]} >Net Receipt - Withheld Amount</span>
+                    </label>
+                    <input className={styles["field-input"]} type="text" value={formData?.net_amount || "0"} onChange={e => handleChange("net_amount", e.target.value)} placeholder="" />
+                </div>
+            </div>
+           
             <button className="save-button" onClick={saveChanges}>Save</button>
         </Modal>
       

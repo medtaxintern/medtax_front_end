@@ -2,7 +2,7 @@
 /* RIGHT COLUMN */
 
 .field-label{
-    @apply text-[11.5px] text-[#222] font-bold mb-2 mt-2 ml-2
+    @apply text-base text-[#222] font-bold mb-2 mt-2 ml-2
 }
 
 .field-input{
